@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "nabil_ui",
+  "project_id": "c8fd8dc9-953c-4f7e-bd98-5e681051d1b7"
+}
