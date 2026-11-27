@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: voidzero-dev/setup-vp@v1.22.0
+        with:
+          node-version: "26"
+          cache: true
+      # Format, lint and type check.
+      - run: vp check
+      # Browser tests use the runner's preinstalled Google Chrome.
+      - run: vp test
+      # Playground and registry JSON (dist/r).
+      - run: vp build

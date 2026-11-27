@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "nabil-ui",
+  "homepage": "https://github.com/NabilSnigdho/nabil-ui",
+  "items": [
+    {
+      "name": "multi-view-calendar",
+      "type": "registry:ui",
+      "title": "Multi-view Calendar",
+      "description": "Calendar with month, year, decade and century views. Click the caption to go up a view, pick a tile to go down.",
+      "dependencies": [
+        "cn",
+        "class-variance-authority",
+        "react-aria-components"
+      ],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/bases/aria/ui/multi-view-calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
