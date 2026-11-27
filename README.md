@@ -50,8 +50,8 @@ pnpm build            # registry JSON + docs site into dist/
 pnpm vendor [name...] # refresh vendored official shadcn sources
 ```
 
-The docs site is a [TanStack Start](https://tanstack.com/start) app in SPA mode,
-with static pages rendered as React Server Components.
+The docs site is an App Router app built with [vinext](https://vinext.dev),
+statically exported (HTML + RSC payloads) and deployed to GitHub Pages.
 
 To test an install locally, point a shadcn app's registry at the dev server:
 

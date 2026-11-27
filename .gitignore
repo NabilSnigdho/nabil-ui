@@ -10,3 +10,6 @@ node_modules
 dist
 public/r
 .vitest
+.next
+next-env.d.ts
+.vinext

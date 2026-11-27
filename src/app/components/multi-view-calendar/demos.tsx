@@ -1,5 +1,6 @@
+"use client"
+
 import * as React from "react"
-import { createFileRoute } from "@tanstack/react-router"
 import type { DateRange } from "react-day-picker"
 
 import {
@@ -11,11 +12,6 @@ import {
   type CalendarView,
 } from "@/registry/bases/base/ui/multi-view-calendar"
 import { MultiViewCalendar as RadixMultiViewCalendar } from "@/registry/bases/radix/ui/multi-view-calendar"
-
-export const Route = createFileRoute("/components/multi-view-calendar")({
-  head: () => ({ meta: [{ title: "Multi-view Calendar · Nabil UI" }] }),
-  component: MultiViewCalendarPage,
-})
 
 function Demo({
   title,
@@ -32,7 +28,7 @@ function Demo({
   )
 }
 
-function MultiViewCalendarPage() {
+export function MultiViewCalendarDemos() {
   const [date, setDate] = React.useState<Date | undefined>(() => new Date())
   const [range, setRange] = React.useState<DateRange | undefined>()
   const [view, setView] = React.useState<CalendarView>("month")

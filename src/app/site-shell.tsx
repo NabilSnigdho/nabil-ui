@@ -1,12 +1,8 @@
+"use client"
+
 import * as React from "react"
-import {
-  createRootRoute,
-  HeadContent,
-  Link,
-  Outlet,
-  Scripts,
-  useLocation,
-} from "@tanstack/react-router"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import {
   Sidebar,
@@ -26,53 +22,22 @@ import {
   useSidebar,
 } from "@/registry/shadcn/base/ui/sidebar"
 
-import css from "../styles.css?url"
-
 const STYLES = ["vega", "nova", "maia", "lyra", "mira", "luma", "sera", "rhea"]
 
 const NAV = [
   {
     label: "Getting Started",
-    items: [{ title: "Introduction", to: "/" }],
+    items: [{ title: "Introduction", href: "/" }],
   },
   {
     label: "Components",
     items: [
-      { title: "Multi-view Calendar", to: "/components/multi-view-calendar" },
+      { title: "Multi-view Calendar", href: "/components/multi-view-calendar" },
     ],
   },
 ] as const
 
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Nabil UI" },
-    ],
-    links: [{ rel: "stylesheet", href: css }],
-  }),
-  shellComponent: RootDocument,
-  component: RootLayout,
-})
-
-function RootDocument({ children }: { children: React.ReactNode }) {
-  return (
-    // Style/dark classes live on <html> so portals (the mobile sidebar sheet,
-    // tooltips) pick them up too.
-    <html lang="en" className="style-nova">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  )
-}
-
-function RootLayout() {
+export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -81,22 +46,20 @@ function RootLayout() {
           <SidebarTrigger />
           <span className="text-sm font-medium md:hidden">Nabil UI</span>
         </header>
-        <div className="p-6 md:p-8">
-          <Outlet />
-        </div>
+        <div className="p-6 md:p-8">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   )
 }
 
 function AppSidebar() {
-  const { pathname } = useLocation()
+  const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
 
   return (
     <Sidebar>
       <SidebarHeader>
-        <Link to="/" className="px-2 py-1 text-base font-semibold">
+        <Link href="/" className="px-2 py-1 text-base font-semibold">
           Nabil UI
         </Link>
       </SidebarHeader>
@@ -107,10 +70,10 @@ function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => (
-                  <SidebarMenuItem key={item.to}>
+                  <SidebarMenuItem key={item.href}>
                     <SidebarMenuButton
-                      isActive={pathname === item.to}
-                      render={<Link to={item.to} />}
+                      isActive={pathname === item.href}
+                      render={<Link href={item.href} />}
                       onClick={() => setOpenMobile(false)}
                     >
                       {item.title}

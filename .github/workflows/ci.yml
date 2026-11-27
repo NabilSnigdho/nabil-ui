@@ -18,5 +18,31 @@ jobs:
       - run: vp check
       # Browser tests use the runner's preinstalled Google Chrome.
       - run: vp test
-      # Playground and registry JSON (dist/r).
+      # Static export of the docs site + registry JSON, under the basePath:
+      # dist/client/<repo>/ (incl. r/), with 404.html one level up.
       - run: vp build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+      - if: github.event_name == 'push'
+        run: cp dist/client/404.html dist/client/${{ github.event.repository.name }}/
+      - if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: dist/client/${{ github.event.repository.name }}
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5.0.1
