@@ -58,7 +58,7 @@ and `transformIcons` are public exports of `shadcn/utils`. `shadcn build` itself
 ## Decision (implemented 2026-11-27)
 
 GitHub Pages hosts the built JSON. Consumers add
-`"@nabil": "https://nabilsnigdho.github.io/nabil-ui/r/{style}/{name}.json"` and run
+`"@nabil": "https://www.nabilsnigdho.dev/nabil-ui/r/{style}/{name}.json"` and run
 `npx shadcn@latest add @nabil/<name>`. The repo layout and commands are in `CLAUDE.md`.
 
 - Unlike the first plan, `cn-*` tokens are resolved per style from day one, because the

@@ -16,7 +16,7 @@ Add the `@nabil` registry to your `components.json`:
 ```json
 {
   "registries": {
-    "@nabil": "https://nabilsnigdho.github.io/nabil-ui/r/{style}/{name}.json"
+    "@nabil": "https://www.nabilsnigdho.dev/nabil-ui/r/{style}/{name}.json"
   }
 }
 ```
