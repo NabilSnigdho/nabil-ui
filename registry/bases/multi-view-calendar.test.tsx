@@ -12,7 +12,7 @@ import {
 import { MultiViewCalendar as RadixCalendar } from "@/registry/bases/radix/ui/multi-view-calendar"
 
 // Real styles: the hidden month grid relies on `visibility`, which affects focus.
-import "@/playground/index.css"
+import "@/src/styles.css"
 
 let root: Root | undefined
 afterEach(() => {

@@ -38,7 +38,9 @@ for (const base of BASES) {
     const file = queue.shift()!
     if (seen.has(file)) continue
     seen.add(file)
-    const source = await get(`bases/${base}/${file}.tsx`)
+    // Components are .tsx, hooks (e.g. hooks/use-mobile) are .ts.
+    const ext = file.startsWith("hooks/") ? "ts" : "tsx"
+    const source = await get(`bases/${base}/${file}.${ext}`)
     // Follow imports of other official files, e.g. calendar -> button.
     for (const [, dep] of source.matchAll(
       new RegExp(`from "@/registry/bases/${base}/([^"]+)"`, "g")
@@ -46,7 +48,7 @@ for (const base of BASES) {
       queue.push(dep)
     }
     write(
-      `registry/shadcn/${base}/${file}.tsx`,
+      `registry/shadcn/${base}/${file}.${ext}`,
       source
         .replaceAll(`@/registry/bases/${base}/`, `@/registry/shadcn/${base}/`)
         .replaceAll(

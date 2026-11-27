@@ -14,5 +14,5 @@
     "noUnusedLocals": true,
     "paths": { "@/*": ["./*"] }
   },
-  "include": ["registry", "playground", "scripts", "vite.config.ts"]
+  "include": ["registry", "src", "scripts", "vite.config.ts"]
 }

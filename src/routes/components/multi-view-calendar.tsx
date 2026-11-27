@@ -1,8 +1,7 @@
 import * as React from "react"
+import { createFileRoute } from "@tanstack/react-router"
 import type { DateRange } from "react-day-picker"
-import { createRoot } from "react-dom/client"
 
-import "./index.css"
 import {
   MultiViewCalendar as AriaMultiViewCalendar,
   MultiViewRangeCalendar as AriaMultiViewRangeCalendar,
@@ -13,7 +12,10 @@ import {
 } from "@/registry/bases/base/ui/multi-view-calendar"
 import { MultiViewCalendar as RadixMultiViewCalendar } from "@/registry/bases/radix/ui/multi-view-calendar"
 
-const STYLES = ["vega", "nova", "maia", "lyra", "mira", "luma", "sera", "rhea"]
+export const Route = createFileRoute("/components/multi-view-calendar")({
+  head: () => ({ meta: [{ title: "Multi-view Calendar · Nabil UI" }] }),
+  component: MultiViewCalendarPage,
+})
 
 function Demo({
   title,
@@ -30,41 +32,25 @@ function Demo({
   )
 }
 
-function App() {
-  const [style, setStyle] = React.useState("nova")
-  const [dark, setDark] = React.useState(false)
+function MultiViewCalendarPage() {
   const [date, setDate] = React.useState<Date | undefined>(() => new Date())
   const [range, setRange] = React.useState<DateRange | undefined>()
   const [view, setView] = React.useState<CalendarView>("month")
   const [log, setLog] = React.useState<string[]>([])
 
-  React.useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark)
-  }, [dark])
-
   return (
-    <main className={`style-${style} flex flex-col gap-8 p-8`}>
-      <header className="flex items-center gap-4 text-sm">
-        <label className="flex items-center gap-2">
-          Style
-          <select
-            className="rounded-md border bg-background px-2 py-1"
-            value={style}
-            onChange={(e) => setStyle(e.target.value)}
-          >
-            {STYLES.map((s) => (
-              <option key={s}>{s}</option>
-            ))}
-          </select>
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={dark}
-            onChange={(e) => setDark(e.target.checked)}
-          />
-          Dark
-        </label>
+    <div className="flex flex-col gap-8">
+      <header className="flex max-w-2xl flex-col gap-2">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Multi-view Calendar
+        </h1>
+        <p className="text-muted-foreground">
+          Calendar with month, year, decade and century views. Click the caption
+          to go up a view, pick a tile to go down.
+        </p>
+        <pre className="w-fit max-w-full overflow-x-auto rounded-lg border bg-muted px-4 py-2 text-sm">
+          npx shadcn@latest add @nabil/multi-view-calendar
+        </pre>
       </header>
 
       <div className="flex flex-wrap items-start gap-8">
@@ -121,12 +107,6 @@ function App() {
           {log.join("\n")}
         </pre>
       </div>
-    </main>
+    </div>
   )
 }
-
-createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
