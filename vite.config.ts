@@ -1,7 +1,6 @@
 import tailwindcss from "@tailwindcss/vite"
-import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import react from "@vitejs/plugin-react"
-import rsc from "@vitejs/plugin-rsc"
+import vinext from "vinext"
 import { defineConfig, lazyPlugins } from "vite-plus"
 import { playwright } from "vite-plus/test/browser-playwright"
 
@@ -27,11 +26,7 @@ export default defineConfig({
     trailingComma: "es5",
     printWidth: 80,
     // Upstream's own .prettierignore skips these generated style files too.
-    ignorePatterns: [
-      "registry/shadcn/styles/**",
-      ".beads/**",
-      "src/routeTree.gen.ts",
-    ],
+    ignorePatterns: ["registry/shadcn/styles/**", ".beads/**"],
     sortImports: {
       customGroups: [
         { groupName: "react", elementNamePattern: ["react", "react/**"] },
@@ -75,7 +70,7 @@ export default defineConfig({
       "vitest",
     ],
     // Upstream shadcn code isn't ours to fix.
-    ignorePatterns: ["registry/shadcn/**", "src/routeTree.gen.ts"],
+    ignorePatterns: ["registry/shadcn/**"],
     jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
     rules: { "vite-plus/prefer-vite-plus-imports": "error" },
     options: { typeAware: true, typeCheck: true },
@@ -98,18 +93,14 @@ export default defineConfig({
     },
   },
   plugins: lazyPlugins(() => [
-    // Docs site. Vitest only needs React; Start's dev server would hijack it.
-    ...(process.env.VITEST
-      ? []
-      : [
-          tanstackStart({ spa: { enabled: true }, rsc: { enabled: true } }),
-          rsc(),
-        ]),
-    react(),
+    // Docs site (app router, config in next.config.ts); vinext registers the
+    // React and RSC plugins itself. Vitest only needs React; vinext's dev
+    // server would hijack it.
+    ...(process.env.VITEST ? [react()] : [vinext()]),
     tailwindcss(),
     {
       // `vp build` can't be overridden, so build the registry JSON into
-      // public/r here; Vite then copies it to dist/client/r with the site.
+      // public/r here; it's copied into the static export with the site.
       name: "nabil-ui:registry",
       apply: "build",
       buildStart: () => import("./scripts/build.ts").then(() => {}),

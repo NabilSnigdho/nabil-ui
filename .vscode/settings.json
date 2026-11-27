@@ -8,5 +8,8 @@
   "oxc.fmt.disableNestedConfig": true,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
-  "editor.codeActionsOnSave": { "source.fixAll.oxc": "explicit" }
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+  "cSpell.words": ["voidzero"]
 }

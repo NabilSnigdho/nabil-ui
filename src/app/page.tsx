@@ -1,6 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
-import { createServerFn } from "@tanstack/react-start"
-import { renderServerComponent } from "@tanstack/react-start/rsc"
+import Link from "next/link"
 
 const REGISTRY = `{
   "registries": {
@@ -8,7 +6,6 @@ const REGISTRY = `{
   }
 }`
 
-// Static content, so it's a server component: zero client JS for this markup.
 function Introduction() {
   return (
     <article className="flex max-w-2xl flex-col gap-4 leading-7">
@@ -44,24 +41,13 @@ function Introduction() {
   )
 }
 
-const getIntroduction = createServerFn({ method: "GET" }).handler(async () => ({
-  Introduction: await renderServerComponent(<Introduction />),
-}))
-
-export const Route = createFileRoute("/")({
-  loader: () => getIntroduction(),
-  // Content never changes at runtime; don't refetch on every visit.
-  staleTime: Infinity,
-  component: Home,
-})
-
-function Home() {
-  const { Introduction } = Route.useLoaderData()
+// Server component: zero client JS for this markup.
+export default function Home() {
   return (
     <div className="flex flex-col gap-6">
-      {Introduction}
+      <Introduction />
       <Link
-        to="/components/multi-view-calendar"
+        href="/components/multi-view-calendar"
         className="w-fit text-sm font-medium underline underline-offset-4"
       >
         Browse components →
