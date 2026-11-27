@@ -2,7 +2,7 @@ import Link from "next/link"
 
 const REGISTRY = `{
   "registries": {
-    "@nabil": "https://nabilsnigdho.github.io/nabil-ui/r/{style}/{name}.json"
+    "@nabil": "https://www.nabilsnigdho.dev/nabil-ui/r/{style}/{name}.json"
   }
 }`
 
